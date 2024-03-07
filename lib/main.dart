@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_instance/get_instance.dart';
 import 'package:statemanagement/base/global_binding.dart';
-import 'package:statemanagement/presentation/getmaterial.dart';
 import 'package:statemanagement/presentation/login_screen.dart';
 
 void main() {

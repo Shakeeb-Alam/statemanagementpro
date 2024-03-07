@@ -11,6 +11,7 @@ import 'package:http/http.dart';
 import 'package:statemanagement/api/authapi.dart';
 import 'package:statemanagement/controllers/auth_controller.dart';
 
+
 // import '../Api/loginapi.dart';
 import '../Domain/login_model.dart';
 
@@ -68,8 +69,9 @@ class _HomeviewState extends State<Homeview> {
                           //     _passwordController.text.toString());
                           // setState(() {});
 
-                          authController.login(_emailController.text.toString(),
+                        await  authController.login(_emailController.text.toString(),
                               _passwordController.text.toString());
+
                         },
                         child: const Text('Submit'),
                       ),

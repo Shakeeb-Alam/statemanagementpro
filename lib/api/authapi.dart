@@ -1,17 +1,20 @@
 import 'dart:convert';
+import 'dart:developer';
 
-import 'package:http/http.dart';
+import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
+import 'package:statemanagement/presentation/covid-screen.dart';
 
 import '../Domain/login_model.dart';
 
 class AuthApi{
   Future<LoginModel>  postData(String email, password) async {
     try {
-      print(email);
-      print(password);
+      log(email);
+      log(password);
 
-      Response endpoint =
-      await post(Uri.parse('http://138.68.172.242/api/login'), body: {
+      http.Response endpoint =
+      await http.post(Uri.parse('http://138.68.172.242/api/login'), body: {
         'email': email,
         'password': password,
       });
@@ -21,17 +24,25 @@ class AuthApi{
         //LoginModel data = jsonDecode(response.body);
         LoginModel data = LoginModel.fromJson(jsonDecode(endpoint.body));
         print(data.toJson());
-
+        Get.to(() => const CovidScreen());
         return data;
-        print(data);
+       // print(data);
         print('Successfully');
       } else {
-        print('No Data' );
+        Get.rawSnackbar(
+          title: 'Wrong ',
+          message: 'login Failed'
+        );
+        log('No Data' );
         return LoginModel();
       }
     } catch (e) {
+      Get.rawSnackbar(
+        title: 'Error',
+        message: e.toString(),
 
-      print(e.toString());
+      );
+      log(e.toString());
       rethrow;
     }
   }
