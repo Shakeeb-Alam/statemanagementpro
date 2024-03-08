@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "172890426271",
+    "project_id": "covidapp-198a8",
+    "storage_bucket": "covidapp-198a8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:172890426271:android:3f793a3c38fa13d7d0cbaa",
+        "android_client_info": {
+          "package_name": "com.example.statemanagement"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAeXhGb_ApUWLTAC7aZPe-VVUUUgG4iqD0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
