@@ -13,15 +13,16 @@ class _ColorPickerWidgetState extends State<ColorPickerWidget> {
   double redValue = 0;
   double greenValue = 0;
   double blueValue = 0;
-  double greyValue = 0;
+
 
   Color getColor() {
     return Color.fromRGBO(
       redValue.toInt(),
       greenValue.toInt(),
       blueValue.toInt(),
+
       // greyValue.toInt(),
-      1.0,
+      0.5,
     );
   }
 
@@ -45,10 +46,10 @@ class _ColorPickerWidgetState extends State<ColorPickerWidget> {
           child: Text('You can use the save button to save your background color'),
         ),
         SizedBox(height: 10),
-        // Text('Red: ${redValue.toInt()}'),
+         Text('Red: ${redValue.toInt()}'),
         Row(
           children: [
-            Padding(
+              Padding(
               padding: const EdgeInsets.only(left: 10),
               child: CircleAvatar(
                 radius: 20,

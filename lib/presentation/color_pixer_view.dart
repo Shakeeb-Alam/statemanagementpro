@@ -1,13 +1,48 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:statemanagement/presentation/library.dart';
 
+import '../domain/color_model.dart';
 import 'color_screen.dart';
 
-class ColorPickerView extends StatelessWidget {
+class ColorPickerView extends StatefulWidget {
   const ColorPickerView({super.key});
 
   @override
+  State<ColorPickerView> createState() => _ColorPickerViewState();
+}
+
+class _ColorPickerViewState extends State<ColorPickerView> {
+  final TextEditingController title = TextEditingController();
+  final TextEditingController description = TextEditingController();
+
+  List<Notes> list =[];
+  late SharedPreferences sharedPreferences;
+
+  getData() {
+    List<String>? stringList = sharedPreferences.getStringList("list");
+
+    if(stringList != null){
+      list = stringList.map((item) => Notes.fromMap(json.decode(item))).toList();
+    }
+  }
+
+  @override
+  void initState() {
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async{
+
+    sharedPreferences = await SharedPreferences.getInstance();
+    getData();
+    });
+
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.download),
@@ -37,8 +72,9 @@ class ColorPickerView extends StatelessWidget {
                             //   color: Colors.grey[400],
                             // ),
                           ),
-                          child: const TextField(
-                            decoration: InputDecoration(
+                          child:  TextFormField(
+                            controller: title,
+                            decoration:const InputDecoration(
                               labelText: 'Enter your text',
                               hintText: 'Type something here',
                               border: OutlineInputBorder(),
@@ -56,9 +92,10 @@ class ColorPickerView extends StatelessWidget {
                             //   color: Colors.grey[400],
                             // ),
                           ),
-                          child: const TextField(
+                          child:  TextFormField(
+                            controller: description,
                             maxLines: 4,
-                            decoration: InputDecoration(
+                            decoration:const InputDecoration(
                               labelText: 'Note..',
                               hintText: 'Type something here',
                               border: OutlineInputBorder(),
@@ -81,8 +118,16 @@ class ColorPickerView extends StatelessWidget {
                                     10), // button border radius
                               ),
                             ),
-                            onPressed: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=>LibraryScreen()));
+                            onPressed: () async{
+
+                              list.insert(0, Notes(
+
+                                  title: title.text,
+                                  description: description.text));
+                              List<String> stringList = list.map((item) => json.encode(item.toMap())).toList();
+                              sharedPreferences.setStringList("list", stringList);
+
+                              Navigator.pop(context, "loadData");
                             },
                             child: const Center(child: Text('save ')))
                       ],
@@ -93,8 +138,8 @@ class ColorPickerView extends StatelessWidget {
         },
       ),
       appBar: AppBar(
-        actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.save))],
-        title: Center(child: Text("Color Designer")),
+        actions: [IconButton(onPressed: () {Navigator.push(context,MaterialPageRoute(builder: (context)=> const NotesScreen()));}, icon: const Icon(Icons.save))],
+        title:const Center(child: Text("Color Designer")),
       ),
       body: SafeArea(
         child: ColorPickerWidget(),
