@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:statemanagement/base/global_binding.dart';
 import 'package:statemanagement/firebase_options.dart';
 import 'package:statemanagement/presentation/color_pixer_view.dart';
-import 'package:statemanagement/presentation/color_screen.dart';
+
 import 'package:statemanagement/presentation/login_screen.dart';
 import 'dart:math';
 import 'package:flutter/material.dart';
